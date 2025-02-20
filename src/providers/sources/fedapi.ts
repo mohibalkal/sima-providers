@@ -156,7 +156,7 @@ export const FedAPIScraper = makeSourcerer({
   name: 'FED API (4K)',
   rank: 240,
   // rank: getUserToken() ? 240 : 140,
-  disabled: true
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
