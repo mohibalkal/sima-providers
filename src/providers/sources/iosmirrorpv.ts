@@ -9,7 +9,7 @@ import { NotFoundError } from '@/utils/errors';
 // See how to set this up yourself: https://gist.github.com/Pasithea0/9ba31d16580800e899c245a4379e902b
 
 const baseUrl = 'https://iosmirror.cc';
-const baseUrl2 = 'https://m3u8-proxy.pstream.org/iosmirror.cc:443';
+const baseUrl2 = 'https://m3u8-proxy.pstream.org/iosmirror.cc:443/pv';
 
 type metaT = {
   year: string;
@@ -17,7 +17,7 @@ type metaT = {
   season: { s: string; id: string; ep: string }[];
 };
 
-type searchT = { status: 'y' | 'n'; searchResult?: { id: string; t: string }[]; error: string };
+type searchT = { searchResult?: { id: string; t: string; y: string }[]; error: string };
 
 type episodeT = { episodes: { id: string; s: string; ep: string }[]; nextPageShow: number };
 
@@ -30,7 +30,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
     query: { s: ctx.media.title },
     headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
   });
-  if (searchRes.status !== 'y' || !searchRes.searchResult) throw new NotFoundError(searchRes.error);
+  if (!searchRes.searchResult) throw new NotFoundError(searchRes.error);
 
   async function getMeta(id: string) {
     return ctx.proxiedFetcher<metaT>('/post.php', {
@@ -41,20 +41,17 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
   }
   ctx.progress(30);
 
-  let metaRes: metaT | undefined;
-
-  // todo: use promise.alp
   let id = searchRes.searchResult.find(async (x) => {
-    metaRes = await getMeta(x.id);
+    const metaRes = await getMeta(x.id);
     return (
       compareTitle(x.t, ctx.media.title) &&
-      (Number(metaRes.year) === ctx.media.releaseYear || metaRes.type === (ctx.media.type === 'movie' ? 'm' : 't'))
+      (Number(x.y) === ctx.media.releaseYear || metaRes.type === (ctx.media.type === 'movie' ? 'm' : 't'))
     );
   })?.id;
   if (!id) throw new NotFoundError('No watchable item found');
 
   if (ctx.media.type === 'show') {
-    metaRes = await getMeta(id); // shouldnt need this, idunno why it doesnt work without this
+    const metaRes = await getMeta(id);
     const showMedia = ctx.media;
 
     const seasonId = metaRes?.season.find((x) => Number(x.s) === showMedia.season.number)?.id;
@@ -124,11 +121,10 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
   };
 };
 
-export const iosmirrorScraper = makeSourcerer({
-  id: 'iosmirror',
-  name: 'NetMirror',
-  rank: 182,
-  disabled: false,
+export const iosmirrorPVScraper = makeSourcerer({
+  id: 'iosmirrorpv',
+  name: 'PrimeMirror',
+  rank: 183,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
   scrapeShow: universalScraper,
