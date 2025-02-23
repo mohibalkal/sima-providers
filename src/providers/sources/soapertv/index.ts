@@ -11,7 +11,7 @@ import { convertPlaylistsToDataUrls } from '@/utils/playlist';
 import { InfoResponse } from './types';
 import { SourcererOutput, makeSourcerer } from '../../base';
 
-const baseUrl = 'https://soaper.vip';
+const baseUrl = 'https://soaper.top';
 
 const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Promise<SourcererOutput> => {
   const searchResult = await ctx.proxiedFetcher('/search.html', {
