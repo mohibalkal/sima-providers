@@ -11,7 +11,10 @@ import { convertPlaylistsToDataUrls } from '@/utils/playlist';
 import { InfoResponse } from './types';
 import { SourcererOutput, makeSourcerer } from '../../base';
 
-const baseUrl = 'https://soaper.top';
+const baseUrl = 'https://soaper.cc';
+
+const userAgent = navigator.userAgent.toLowerCase();
+const isIos = /iphone|ipad|ipod/.test(userAgent);
 
 const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Promise<SourcererOutput> => {
   const searchResult = await ctx.proxiedFetcher('/search.html', {
@@ -131,6 +134,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
 export const soaperTvScraper = makeSourcerer({
   id: 'soapertv',
   name: 'SoaperTV',
+  disabled: !!isIos
   rank: 161,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
