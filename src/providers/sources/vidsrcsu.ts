@@ -13,7 +13,6 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       },
     },
   );
-  // eslint-disable-next-line no-console
 
   const decodedPeterMatch = embedPage.match(/decodeURIComponent\('([^']+)'\)/);
   const decodedPeterUrl = decodedPeterMatch ? decodeURIComponent(decodedPeterMatch[1]) : null;
