@@ -73,7 +73,9 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
     method: 'POST',
     body: formData,
     headers: {
-      referer: `${baseUrl}${showLink}`,
+      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+      'Referer': `${baseUrl}${showLink}`,
+      'Viewport-Width': '375'
     },
   });
 
@@ -134,7 +136,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
 export const soaperTvScraper = makeSourcerer({
   id: 'soapertv',
   name: 'SoaperTV',
-  disabled: !isIos,
+  disabled: false,
   rank: 161,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
