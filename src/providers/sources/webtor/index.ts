@@ -63,7 +63,7 @@ export const webtorScraper = makeSourcerer({
   id: 'webtor',
   name: 'Webtor',
   rank: 2,
-  disabled: false,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
