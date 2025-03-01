@@ -129,7 +129,7 @@ export const iosmirrorPVScraper = makeSourcerer({
   id: 'iosmirrorpv',
   name: 'PrimeMirror',
   rank: 183,
-  disabled: !!isIos,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
   scrapeShow: universalScraper,
