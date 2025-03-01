@@ -132,7 +132,7 @@ export const iosmirrorScraper = makeSourcerer({
   id: 'iosmirror',
   name: 'NetMirror',
   rank: 182,
-  disabled: !!isIos,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
   scrapeShow: universalScraper,
