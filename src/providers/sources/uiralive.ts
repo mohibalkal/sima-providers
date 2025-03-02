@@ -42,9 +42,9 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
 export const uiraliveScraper = makeSourcerer({
   id: 'uiralive',
-  name: 'uira.live',
+  name: 'uira',
   rank: 921,
-  disabled: true,
+  disabled: false, // hopefully whitelisted soon
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
