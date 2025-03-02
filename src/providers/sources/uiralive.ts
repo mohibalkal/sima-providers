@@ -44,7 +44,7 @@ export const uiraliveScraper = makeSourcerer({
   id: 'uiralive',
   name: 'uira',
   rank: 921,
-  disabled: false, // hopefully whitelisted soon
+  disabled: true, // hopefully whitelisted soon
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
