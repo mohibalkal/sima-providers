@@ -9,22 +9,22 @@ const providers = [
   {
     id: 'autoembed-hindi',
     rank: 9,
-    disabled: false,
+    disabled: true,
   },
   {
     id: 'autoembed-tamil',
     rank: 8,
-    disabled: false,
+    disabled: true,
   },
   {
     id: 'autoembed-telugu',
     rank: 7,
-    disabled: false,
+    disabled: true,
   },
   {
     id: 'autoembed-bengali',
     rank: 6,
-    disabled: false,
+    disabled: true,
   },
 ];
 
