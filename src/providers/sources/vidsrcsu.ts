@@ -3,6 +3,8 @@ import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
+const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
   const embedPage = await ctx.proxiedFetcher(
     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
@@ -20,10 +22,15 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   const serverMatches = [...embedPage.matchAll(/label: 'Server (\d+)', url: '(https.*)'/g)];
 
-  const servers = serverMatches.map((match) => ({
+  let servers = serverMatches.map((match) => ({
     serverNumber: parseInt(match[1], 10),
     url: match[2],
   }));
+
+  // Only filter out server 16 on iOS
+  if (isIOS) {
+    servers = servers.filter((server) => server.serverNumber !== 16);
+  }
 
   if (decodedPeterUrl) {
     servers.push({
@@ -40,12 +47,14 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     embedId: `server-${server.serverNumber}`,
     url: server.url,
   }));
+
   ctx.progress(90);
 
   return {
     embeds,
   };
 }
+
 export const vidsrcsuScraper = makeSourcerer({
   id: 'vidsrcsu',
   name: 'vidsrc.su',
