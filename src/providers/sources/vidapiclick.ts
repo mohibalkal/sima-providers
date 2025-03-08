@@ -41,7 +41,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
 export const vidapiClickScraper = makeSourcerer({
   id: 'vidapi-click',
-  name: 'vidapi',
+  name: 'Vidapi 🐙',
   rank: 89,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
