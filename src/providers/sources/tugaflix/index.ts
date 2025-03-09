@@ -9,7 +9,7 @@ import { baseUrl, parseSearch } from './common';
 
 export const tugaflixScraper = makeSourcerer({
   id: 'tugaflix',
-  name: 'Tugaflix',
+  name: 'Tugaflix 🐯',
   rank: 70,
   flags: [flags.IP_LOCKED],
   scrapeMovie: async (ctx) => {
