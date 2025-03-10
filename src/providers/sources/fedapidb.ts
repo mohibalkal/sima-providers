@@ -135,7 +135,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
 export const FedAPIDBScraper = makeSourcerer({
   id: 'fedapidb',
-  name: 'Febbox ⭐️',
+  name: 'SuperStream ⭐️',
   rank: 942,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
