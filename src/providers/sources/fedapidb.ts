@@ -32,6 +32,15 @@ const languageMap: Record<string, string> = {
   Vietnamese: 'vi',
 };
 
+const getUserToken = (): string | null => {
+  try {
+    return typeof window !== 'undefined' ? window.localStorage.getItem('febbox_ui_token') : null;
+  } catch (e) {
+    console.warn('Unable to access localStorage:', e);
+    return null;
+  }
+};
+
 interface StreamData {
   streams: Record<string, string>;
   subtitles: Record<string, Array<{ name: string; url: string }>>;
@@ -67,22 +76,24 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   }, {});
 
   const captions: Caption[] = [];
-  for (const [langKey, subs] of Object.entries(data.subtitles)) {
-    // Extract language name from key ("english_subtitles" -> "English")
-    const languageKeyPart = langKey.split('_')[0];
-    const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
-    const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
+  if (data.subtitles) {
+    for (const [langKey, subs] of Object.entries(data.subtitles)) {
+      // Extract language name from key ("english_subtitles" -> "English")
+      const languageKeyPart = langKey.split('_')[0];
+      const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
+      const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
 
-    for (const sub of subs) {
-      const url = sub.url;
-      const isVtt = url.toLowerCase().endsWith('.vtt');
-      captions.push({
-        type: isVtt ? 'vtt' : 'srt',
-        id: url,
-        url,
-        language: languageCode,
-        hasCorsRestrictions: false,
-      });
+      for (const sub of subs) {
+        const url = sub.url;
+        const isVtt = url.toLowerCase().endsWith('.vtt');
+        captions.push({
+          type: isVtt ? 'vtt' : 'srt',
+          id: url,
+          url,
+          language: languageCode,
+          hasCorsRestrictions: false,
+        });
+      }
     }
   }
 
@@ -137,7 +148,7 @@ export const FedAPIDBScraper = makeSourcerer({
   id: 'fedapidb',
   name: 'Febbox ⭐️',
   rank: 942,
-  disabled: true,
+  disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
