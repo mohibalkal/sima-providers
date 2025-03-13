@@ -57,6 +57,18 @@ import { smashyStreamOScraper } from './embeds/smashystream/opstream';
 import { smashyStreamFScraper } from './embeds/smashystream/video1';
 import { streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
+import {
+  uiraFlixhqScraper,
+  uiraGhostScraper,
+  uiraGuruScraper,
+  uiraHydraxScraper,
+  uiraMegaScraper,
+  uiraNinjaScraper,
+  uiraOrionScraper,
+  uiraRabbitScraper,
+  uiraVidapiScraper,
+  uiraVidsrcvipScraper,
+} from './embeds/uiralive';
 import { vidCloudScraper } from './embeds/vidcloud';
 import { vidplayScraper } from './embeds/vidplay';
 import {
@@ -81,10 +93,8 @@ import { warezcdnembedMp4Scraper } from './embeds/warezcdn/mp4';
 import { warezPlayerScraper } from './embeds/warezcdn/warezplayer';
 import { webtor1080Scraper, webtor480Scraper, webtor4kScraper, webtor720Scraper } from './embeds/webtor';
 import { wootlyScraper } from './embeds/wootly';
-import { coitusScraper } from './sources/coitus';
 import { embedsuScraper } from './sources/embedsu';
 import { FedAPIScraper } from './sources/fedapi';
-import { FedAPIDBScraper } from './sources/fedapidb';
 import { goojaraScraper } from './sources/goojara';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { iosmirrorScraper } from './sources/iosmirror';
@@ -94,12 +104,10 @@ import { nepuScraper } from './sources/nepu';
 import { nitesScraper } from './sources/nites';
 import { primewireScraper } from './sources/primewire';
 import { ridooMoviesScraper } from './sources/ridomovies';
-import { roverScraper } from './sources/rover';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
 import { uiraliveScraper } from './sources/uiralive';
-import { vidapiClickScraper } from './sources/vidapiclick';
 import { vidlinkScraper } from './sources/vidlink';
 import { vidSrcToScraper } from './sources/vidsrcto';
 import { warezcdnScraper } from './sources/warezcdn';
@@ -144,14 +152,10 @@ export function gatherAllSources(): Array<Sourcerer> {
     embedsuScraper,
     vidlinkScraper,
     FedAPIScraper,
-    FedAPIDBScraper,
     slidemoviesScraper,
     iosmirrorScraper,
     iosmirrorPVScraper,
     uiraliveScraper,
-    vidapiClickScraper,
-    coitusScraper,
-    roverScraper,
   ];
 }
 
@@ -221,5 +225,15 @@ export function gatherAllEmbeds(): Array<Embed> {
     webtor720Scraper,
     webtor480Scraper,
     viperScraper,
+    uiraMegaScraper,
+    uiraOrionScraper,
+    uiraRabbitScraper,
+    uiraNinjaScraper,
+    uiraGuruScraper,
+    uiraVidsrcvipScraper,
+    uiraVidapiScraper,
+    uiraFlixhqScraper,
+    uiraGhostScraper,
+    uiraHydraxScraper,
   ];
 }
