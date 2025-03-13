@@ -1,1 +1,1 @@
-providers for movies.samj.app 🤘
+providers for movies.sima.app 🤘
