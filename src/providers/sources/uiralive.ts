@@ -11,40 +11,45 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     ctx.media.type === 'movie' ? '' : `?s=${ctx.media.season.number}&e=${ctx.media.episode.number}`
   }`;
 
-  let result = await ctx.fetcher(fetchUrl);
+  try {
+    let result = await ctx.fetcher(fetchUrl);
 
-  if (!result?.sources || result.sources.length === 0) {
-    try {
+    if (!result?.sources || result.sources.length === 0) {
+      // Retry once if no sources found
       result = await ctx.fetcher(fetchUrl);
-    } catch (e: any) {
-      if (e instanceof NotFoundError) throw new NotFoundError(e.message);
-      throw e;
     }
+
+    if (!result?.sources?.[0]?.url) {
+      throw new NotFoundError('No valid sources found');
+    }
+
+    ctx.progress(90);
+
+    return {
+      embeds: [],
+      stream: [
+        {
+          id: 'primary',
+          playlist: result.sources[0].url,
+          type: 'hls',
+          flags: [flags.CORS_ALLOWED],
+          captions: result.captions || [],
+        },
+      ],
+    };
+  } catch (e: any) {
+    if (e instanceof NotFoundError) {
+      throw new NotFoundError(`uiralive: ${e.message}`);
+    }
+    throw e;
   }
-
-  if (!result?.sources || result.sources.length === 0) throw new NotFoundError('No sources found');
-
-  ctx.progress(90);
-
-  return {
-    embeds: [],
-    stream: [
-      {
-        id: 'primary',
-        playlist: result.sources[0].url,
-        type: 'hls',
-        flags: [flags.CORS_ALLOWED],
-        captions: [],
-      },
-    ],
-  };
 }
 
 export const uiraliveScraper = makeSourcerer({
   id: 'uiralive',
-  name: 'uira',
-  rank: 922,
-  disabled: true,
+  name: 'Uira',
+  rank: 940,
+  disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
