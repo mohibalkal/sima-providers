@@ -105,19 +105,6 @@ import { vidSrcToScraper } from './sources/vidsrcto';
 import { warezcdnScraper } from './sources/warezcdn';
 import { webtorScraper } from './sources/webtor';
 
-import {
-  uiraMegaScraper,
-  uiraOrionScraper,
-  uiraRabbitScraper,
-  uiraNinjaScraper,
-  uiraGuruScraper,
-  uiraVidsrcvipScraper,
-  uiraVidapiScraper,
-  uiraFlixhqScraper,
-  uiraGhostScraper,
-  uiraHydraxScraper,
-} from './embeds/uiralive';
-
 export function gatherAllSources(): Array<Sourcerer> {
   // all sources are gathered here
   return [
@@ -234,15 +221,5 @@ export function gatherAllEmbeds(): Array<Embed> {
     webtor720Scraper,
     webtor480Scraper,
     viperScraper,
-    uiraMegaScraper,
-    uiraOrionScraper,
-    uiraRabbitScraper,
-    uiraNinjaScraper,
-    uiraGuruScraper,
-    uiraVidsrcvipScraper,
-    uiraVidapiScraper,
-    uiraFlixhqScraper,
-    uiraGhostScraper,
-    uiraHydraxScraper,
   ];
 }

@@ -11,32 +11,20 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     ctx.media.type === 'movie' ? '' : `?s=${ctx.media.season.number}&e=${ctx.media.episode.number}`
   }`;
 
-  let result;
-  try {
-    result = await ctx.fetcher(fetchUrl);
-  } catch (e: any) {
-    if (e instanceof NotFoundError) throw new NotFoundError(`uiralive: ${e.message}`);
-    throw e;
-  }
+  let result = await ctx.fetcher(fetchUrl);
 
-  if (!result) {
+  if (!result?.sources || result.sources.length === 0) {
     try {
       result = await ctx.fetcher(fetchUrl);
     } catch (e: any) {
-      if (e instanceof NotFoundError) throw new NotFoundError(`uiralive: ${e.message}`);
+      if (e instanceof NotFoundError) throw new NotFoundError(e.message);
       throw e;
     }
   }
 
-  if (!result || !result.sources || result.sources.length === 0) {
-    throw new NotFoundError('uiralive: No sources found');
-  }
+  if (!result?.sources || result.sources.length === 0) throw new NotFoundError('No sources found');
 
   ctx.progress(90);
-
-  if (!result.sources[0].url) {
-    throw new Error('uiralive: Source URL is missing');
-  }
 
   return {
     embeds: [],
@@ -46,7 +34,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         playlist: result.sources[0].url,
         type: 'hls',
         flags: [flags.CORS_ALLOWED],
-        captions: result.captions || [],
+        captions: [],
       },
     ],
   };
@@ -54,9 +42,9 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
 export const uiraliveScraper = makeSourcerer({
   id: 'uiralive',
-  name: 'Uira 🔥',
-  rank: 940,
-  disabled: false,
+  name: 'uira',
+  rank: 922,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
