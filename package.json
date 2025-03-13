@@ -1,7 +1,7 @@
 {
-  "name": "@movie-web/providers",
-  "version": "2.3.0",
-  "description": "Package that contains all the providers of movie-web",
+  "name": "@yazan/providers",
+  "version": "1.0.0",
+  "description": "Package that contains all the providers of kal-sima",
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -22,18 +22,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/movie-web/providers.git"
+    "url": "git+https://github.com/mohibalkal/sima-providers.git"
   },
   "keywords": [
-    "movie-web",
-    "providers"
+    "sima",
+    "providers",
+    "kal-sima"
   ],
-  "author": "movie-web",
+  "author": "mohibalkal",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/movie-web/providers/issues"
+    "url": "https://github.com/mohibalkal/sima-providers/issues"
   },
-  "homepage": "https://movie-web.github.io/providers/",
+  "homepage": "https://github.com/mohibalkal/sima-providers#readme",
   "scripts": {
     "build": "vite build && tsc --noEmit",
     "cli": "vite-node ./src/dev-cli/index.ts",
